@@ -1,9 +1,9 @@
 //
 //  CLLocation+TCHelper.m
-//  SudiyiClient
+//  Dake
 //
-//  Created by cdk on 15/8/11.
-//  Copyright (c) 2015年 Sudiyi. All rights reserved.
+//  Created by Dake on 15/8/11.
+//  Copyright (c) 2015年 Dake. All rights reserved.
 //
 
 #import "CLLocation+TCHelper.h"
@@ -112,7 +112,7 @@
 {
     CLLocationCoordinate2D gcj02Pt = [self gcj02Encrypt:location.latitude
                                                   bdLon:location.longitude];
-    return [self bd09Encrypt:gcj02Pt.latitude bdLon:gcj02Pt.longitude] ;
+    return [self bd09Encrypt:gcj02Pt.latitude bdLon:gcj02Pt.longitude];
 }
 
 + (CLLocationCoordinate2D)gcj02ToBd09:(CLLocationCoordinate2D)location
@@ -136,6 +136,18 @@
     CLLocationCoordinate2D trans_loc = [self.class wgs84ToGcj02:self.coordinate];
     return [[self.class alloc] initWithCoordinate:trans_loc altitude:self.altitude horizontalAccuracy:self.horizontalAccuracy verticalAccuracy:self.verticalAccuracy timestamp:self.timestamp];
 }
+
+
+#pragma mark - 
+
++ (CLLocationCoordinate2D)precision100mFloor:(CLLocationCoordinate2D)location
+{
+    // 精确到千分位, 百米精度
+    static CLLocationDegrees const kPrecision = 1000.0f;
+    return CLLocationCoordinate2DMake(((long)(location.latitude * kPrecision))/kPrecision, ((long)(location.longitude * kPrecision))/kPrecision);
+}
+
+
 
 
 @end
